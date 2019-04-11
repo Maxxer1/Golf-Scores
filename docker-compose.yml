@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: "mysql"
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "golf_scores"
+    command: --default-authentication-plugin=mysql_native_password
+  web:
+    container_name: "golf_scores"
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py loaddata db_fixtures.json && python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    ports:
+      - "8000:8000"
