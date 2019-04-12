@@ -1,0 +1,54 @@
+{% extends "base.html"%}
+{% block content %}
+<form class="form-submit" method="post">
+   {% csrf_token %}
+  <h3>Golf Courses</h3>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" required
+      title="Name of expense required">
+    <input type="text" class="form-control" name="city" id="city" placeholder="Enter city">
+    <input type="text" class="form-control" name="country" id="country" placeholder="Enter country">
+    <input type="number" min="0" class="form-control" name="par" id="par" placeholder="Enter Par"
+    required title="Golf course par required">
+    <div class="input-group-append">
+        <button class="btn btn-primary" type="submit">Create</button>
+    </div>  
+  </div>
+  {% if error_message %}
+  <div class="alert alert-danger" role="alert">
+      {{ error_message }}
+  </div>
+  {% endif %}
+</form>
+<div class="table-container">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Par</th>
+              <th scope="col">City</th>
+              <th scope="col">Country</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for course in courses %}
+            <tr>
+              <form action="{% url 'delete_course' %}" method="post">
+                {% csrf_token %}
+                <td>{{ course.name }}</td>
+                <td>{{ course.par }}</td>
+                <td>{{ course.city }}</td>
+                <td>{{ course.country }}</td>
+                <td>
+                    <button type="submit" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <input type="hidden" name="name" value="{{ course.name }}">
+                  </button>
+                </td>
+              </form>
+              {% endfor %}
+            </tr>
+          </tbody>
+        </table>
+{% endblock %}

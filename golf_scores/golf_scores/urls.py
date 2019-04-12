@@ -19,8 +19,12 @@ from web import views
 from accounts import views as accounts_views
 
 urlpatterns = [
-    path('index/', views.index),
+    path('', views.index),
+    path('home/', views.home),
     path('signup/', accounts_views.signup, name='signup'),
+    path('logout/', accounts_views.logout_view, name='logout'),
+    path('golf_courses/', views.golf_courses, name='golf_courses'),
+    path('delete_course/', views.delete_course, name='delete_course'),
     path('signin/', accounts_views.signin, name='signin'),
     path('admin/', admin.site.urls),
 ]
