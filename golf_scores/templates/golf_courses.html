@@ -1,6 +1,6 @@
 {% extends "base.html"%} {% block content %}
 <div class="container">
-    <form class="form-submit" method="post">
+    <form class="form-submit" action="{% url 'web:golf_courses' %}" method="post">
         {% csrf_token %}
         <h3>Golf Courses</h3>
         <div class="input-group mb-3">
@@ -35,7 +35,7 @@
             <tbody>
                 {% for count, golf_course in golf_courses %}
                 <tr>
-                    <form action="{% url 'delete_course' %}" method="post">
+                    <form action="{% url 'web:delete_course' %}" method="post">
                         {% csrf_token %}
                         <td>{{ count }}</td>
                         <td>{{ golf_course.name }}</td>

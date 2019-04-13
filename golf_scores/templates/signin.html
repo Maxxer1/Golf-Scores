@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %}
-<div class="center-container container">
-    <div class="card" style="margin: 0 auto; max-width: 30rem; text-align: center; border: 0px;">
-    <form class="form-submit form-small" action="{% url 'signin' %}" method="post">
+<div class="centered-container container">
+    <div class="sign-form card">
+    <form class="form-submit" action="{% url 'accounts:signin' %}" method="post">
         {% csrf_token %}
         <h3>Sign In</h3>
         <div class="form-group">
@@ -13,7 +13,7 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" name="password" id="password" placeholder="Password">
         </div>
-        <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up here<a /></p>
+        <p>Don't have an account? <a href="{% url 'accounts:signup' %}">Sign Up here<a /></p>
 {% if error_message %}
 <div class="alert alert-danger" role="alert">
     {{ error_message }}

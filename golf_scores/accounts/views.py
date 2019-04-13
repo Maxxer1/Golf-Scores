@@ -30,7 +30,7 @@ def signin(request):
             user = User.objects.get(username=form.__getitem__('username'))
             if user is not None and user.check_password(form.__getitem__('password')):
                 login(request, user)
-                return redirect('/home')
+                return redirect('/')
             else:
                 return render(request, 'signin.html', {'error_message': ErrorMessage.USERNAME_OR_PASSWORD_INCORRECT.value})
         except ObjectDoesNotExist:
@@ -40,4 +40,4 @@ def signin(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('/home')
+    return redirect('/')

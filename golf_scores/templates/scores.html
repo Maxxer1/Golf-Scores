@@ -1,6 +1,6 @@
 {% extends "base.html"%} {% block content %}
 <div class="container">
-    <form class="form-submit" method="post">
+    <form class="form-submit" action="{% url 'web:scores' %}" method="post">
         {% csrf_token %}
         <h3>Scores</h3>
         <div class="input-group mb-3">
@@ -37,7 +37,7 @@
             <tbody>
                 {% for count, score in scores %}
                 <tr>
-                    <form action="{% url 'delete_score' %}" method="post">
+                    <form action="{% url 'web:delete_score' %}" method="post">
                         {% csrf_token %}
                         <td>{{ count }}</td>
                         <td>{{ score.date }}</td>

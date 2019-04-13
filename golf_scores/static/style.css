@@ -1,3 +1,10 @@
-.center-container{
-    margin-top: 15%;
+.centered-container {
+    margin-top: 10%;
+}
+
+.sign-form{
+    margin: 0 auto;
+    max-width: 30rem;
+    text-align: center;
+    border: 0px;
 }

@@ -2,18 +2,19 @@ from django.shortcuts import render, redirect
 from .models import GolfCourse, Score
 from commons.error_messages import ErrorMessage
 from .helpers import calculate_score_to_par, format_date
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
     return render(request, 'index.html')
 
-
-def home(request):
+@login_required
+def home_view(request):
     return render(request, 'home.html')
 
-
+@login_required
 def golf_courses(request):
-    golf_courses = GolfCourse.objects.all()
+    golf_courses = GolfCourse.objects.all().order_by('country')
     if request.method == 'POST':
         form = request.POST
         if GolfCourse.objects.filter(name=form.__getitem__('name')).exists():
@@ -23,15 +24,15 @@ def golf_courses(request):
         return redirect('/golf_courses')
     return render(request, 'golf_courses.html', {'golf_courses': enumerate(golf_courses, start=1)})
 
-
+@login_required
 def delete_course(request):
     if request.method == 'POST':
         form = request.POST
         GolfCourse.objects.get(pk=form.__getitem__('id')).delete()
         return redirect('/golf_courses')
 
-
-def scores_view(request):
+@login_required
+def scores(request):
     scores = Score.objects.all().order_by('date').reverse()
     golf_courses = GolfCourse.objects.all()
     if request.method == 'POST':
@@ -43,7 +44,7 @@ def scores_view(request):
             'datepicker')), golf_course=golf_course, score=form.__getitem__('score'), to_par=to_par).save()
     return render(request, 'scores.html', {'golf_courses': golf_courses, 'scores': enumerate(scores, start=1)})
 
-
+@login_required
 def delete_score(request):
     if request.method == 'POST':
         form = request.POST
