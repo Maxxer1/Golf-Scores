@@ -1,0 +1,63 @@
+{% extends "base.html"%} {% block content %}
+<div class="container">
+    <form class="form-submit" method="post">
+        {% csrf_token %}
+        <h3>Scores</h3>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="datepicker" id="datepicker" placeholder="Enter date" required
+                title="Date required">
+            <select class="custom-select" name="golf_course" id="golf_course">
+                {% for golf_course in golf_courses %}
+                <option value="{{ golf_course.name }}">{{ golf_course.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" min="0" class="form-control" name="score" id="score" placeholder="Enter score">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Create</button>
+            </div>
+        </div>
+        {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+        {% endif %}
+    </form>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Golf Course</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">To par</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for count, score in scores %}
+                <tr>
+                    <form action="{% url 'delete_score' %}" method="post">
+                        {% csrf_token %}
+                        <td>{{ count }}</td>
+                        <td>{{ score.date }}</td>
+                        <td>{{ score.golf_course.name}}</td>
+                        <td>{{ score.score }}</td>
+                        {% if score.to_par < 0 %}
+                        <td>{{ score.to_par }}</td>
+                        {% else %}
+                        <td>+{{ score.to_par }}</td>
+                        {% endif %}
+                        <td>
+                            <button type="submit" class="close" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                <input type="hidden" name="id" value="{{ score.id }}">
+                            </button>
+                        </td>
+                    </form>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
