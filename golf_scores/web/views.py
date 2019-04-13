@@ -14,13 +14,15 @@ def home(request):
 
 
 def golf_courses(request):
+    golf_courses = GolfCourse.objects.all().values()
     if request.method == 'POST':
         form = request.POST
+        if GolfCourse.objects.filter(name=form.__getitem__('name')).exists():
+            return render(request, 'golf_courses.html', {'courses': golf_courses, 'error_message': ErrorMessage.COURSE_ALREADY_EXISTS.value})
         golf_course = GolfCourse.objects.create(name=form.__getitem__('name'), city=form.__getitem__(
             'city'), country=form.__getitem__('country'), par=form.__getitem__('par'))
         golf_course.save()
         return redirect('/golf_courses')
-    golf_courses = GolfCourse.objects.all().values()
     return render(request, 'golf_courses.html', {'courses': golf_courses})
 
 

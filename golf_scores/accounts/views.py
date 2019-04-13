@@ -9,6 +9,10 @@ from django.core.exceptions import ObjectDoesNotExist
 def signup(request):
     if request.method == 'POST':
         form = request.POST
+        if User.objects.filter(username=form.__getitem__('username')).exists():
+            return render(request, 'signup.html', {'error_message': ErrorMessage.USERNAME_ALREADY_EXISTS.value})
+        if User.objects.filter(email=form.__getitem__('email')).exists():
+            return render(request, 'signup.html', {'error_message': ErrorMessage.EMAIL_ALREADY_EXISTS.value})
         if form.__getitem__('password') != form.__getitem__('confirm_password'):
             return render(request, 'signup.html', {'error_message': ErrorMessage.PASSWORDS_DONT_MATCH.value})
         user = User.objects.create_user(form.__getitem__(
