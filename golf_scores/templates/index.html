@@ -1,3 +1,7 @@
 {% extends 'base.html' %} {% block content %}
-<p>Hello World!</p>
+    {% if user.is_authenticated %}
+        <h1>Autentyk</h1>
+    {% else %}
+        <h1>Nie</h1>
+    {% endif %}
 {% endblock %}

@@ -128,6 +128,7 @@ DATE_FORMAT = "d.m.Y"
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "static", "web_img"),
 )
 
 STATIC_URL = '/static/'

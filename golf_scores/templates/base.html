@@ -18,7 +18,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'web:index' %}">Golf Scores</a>
+    {% load static %}
+    <a class="navbar-brand" href="{% url 'web:index' %}"><img src="{% static 'flag.svg' %}" style="width: 30px; height: 25px;">Golf Scores</a> 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -27,9 +28,9 @@
         <div class="navbar-nav ml-auto">
             <a class="nav-item nav-link" href="{% url 'web:index' %}">Home</a>
             {% if user.is_authenticated %}
-            <a class="nav-item nav-link" href="{% url 'web:golf_courses' %}">Golf Courses</a>
-            <a class="nav-item nav-link" href="{% url 'web:scores' %}">Scores</a>
-            <a class="nav-item nav-link" href="#"><i class="fas fa-user"></i> {{ user.username }}</a>
+            <a class="nav-item nav-link" href="{% url 'web:golf_courses' %}"><i class="fas fa-golf-ball"></i> Golf Courses</a>
+            <a class="nav-item nav-link" href="{% url 'web:scores' %}"><i class="fas fa-medal"></i> Scores</a>
+            <a class="nav-item nav-link" href="{% url 'accounts:account_management' %}"><i class="fas fa-user"></i> {{ user.username }}</a>
             <a class="nav-item nav-link" href="{% url 'accounts:logout' %}">Logout</a>
             {% else %}
             <a class="nav-item nav-link" href="{% url 'accounts:signin' %}">Sign In</a>

@@ -41,3 +41,10 @@ def signin(request):
 def logout_view(request):
     logout(request)
     return redirect('/')
+
+
+def account_management(request):
+    return render(request, 'account_management.html')
+
+def change_password(request):
+    return
