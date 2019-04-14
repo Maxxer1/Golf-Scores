@@ -16,19 +16,17 @@ def home_view(request):
 def golf_courses(request):
     golf_courses = GolfCourse.objects.all().order_by('country')
     if request.method == 'POST':
-        form = request.POST
-        if GolfCourse.objects.filter(name=form.__getitem__('name')).exists():
+        if GolfCourse.objects.filter(name=request.POST['name']).exists():
             return render(request, 'golf_courses.html', {'golf_courses': golf_courses, 'error_message': ErrorMessage.COURSE_ALREADY_EXISTS.value})
-        golf_course = GolfCourse.objects.create(name=form.__getitem__('name'), city=form.__getitem__(
-            'city'), country=form.__getitem__('country'), par=form.__getitem__('par')).save()
+        golf_course = GolfCourse.objects.create(name=request.POST['name'], city=request.POST[
+            'city'], country=request.POST['country'], par=request.POST['par']).save()
         return redirect('/golf_courses')
     return render(request, 'golf_courses.html', {'golf_courses': enumerate(golf_courses, start=1)})
 
 @login_required
 def delete_course(request):
     if request.method == 'POST':
-        form = request.POST
-        GolfCourse.objects.get(pk=form.__getitem__('id')).delete()
+        GolfCourse.objects.get(pk=request.POST['id']).delete()
         return redirect('/golf_courses')
 
 @login_required
@@ -36,17 +34,15 @@ def scores(request):
     scores = Score.objects.filter(user_score_id=request.user.id).order_by('date').reverse()
     golf_courses = GolfCourse.objects.all()
     if request.method == 'POST':
-        form = request.POST
         golf_course = GolfCourse.objects.filter(
-            name=form.__getitem__('golf_course')).first()
-        to_par = calculate_score_to_par(int(form.__getitem__('score')), golf_course.par)
-        score = Score.objects.create(date=format_date(form.__getitem__(
-            'datepicker')), golf_course=golf_course, score=form.__getitem__('score'), to_par=to_par, user_score_id=request.user.id).save()
+            name=request.POST['golf_course']).first()
+        to_par = calculate_score_to_par(int(request.POST['score']), golf_course.par)
+        score = Score.objects.create(date=format_date(request.POST[
+            'datepicker']), golf_course=golf_course, score=request.POST['score'], to_par=to_par, user_score_id=request.user.id).save()
     return render(request, 'scores.html', {'golf_courses': golf_courses, 'scores': enumerate(scores, start=1)})
 
 @login_required
 def delete_score(request):
     if request.method == 'POST':
-        form = request.POST
-        Score.objects.get(pk=form.__getitem__('id')).delete()
+        Score.objects.get(pk=request.POST['id']).delete()
         return redirect('/scores')
