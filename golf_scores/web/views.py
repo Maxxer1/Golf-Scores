@@ -33,7 +33,7 @@ def delete_course(request):
 
 @login_required
 def scores(request):
-    scores = Score.objects.all().order_by('date').reverse()
+    scores = Score.objects.filter(user_score_id=request.user.id).order_by('date').reverse()
     golf_courses = GolfCourse.objects.all()
     if request.method == 'POST':
         form = request.POST
@@ -41,7 +41,7 @@ def scores(request):
             name=form.__getitem__('golf_course')).first()
         to_par = calculate_score_to_par(int(form.__getitem__('score')), golf_course.par)
         score = Score.objects.create(date=format_date(form.__getitem__(
-            'datepicker')), golf_course=golf_course, score=form.__getitem__('score'), to_par=to_par).save()
+            'datepicker')), golf_course=golf_course, score=form.__getitem__('score'), to_par=to_par, user_score_id=request.user.id).save()
     return render(request, 'scores.html', {'golf_courses': golf_courses, 'scores': enumerate(scores, start=1)})
 
 @login_required

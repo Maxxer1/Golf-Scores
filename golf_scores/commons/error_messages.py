@@ -6,4 +6,5 @@ class ErrorMessage(Enum):
     EMAIL_ALREADY_EXISTS = "E-mail already exists"
     USERNAME_OR_PASSWORD_INCORRECT = "Username or password is incorrect"
     COURSE_ALREADY_EXISTS = "Course already exists"
+    WRONG_CURRENT_PASSWORD = "Wrong current password"
     

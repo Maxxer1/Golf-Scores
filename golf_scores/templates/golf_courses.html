@@ -1,8 +1,8 @@
 {% extends "base.html"%} {% block content %}
-<div class="container">
+<div class="container centered-container">
     <form class="form-submit" action="{% url 'web:golf_courses' %}" method="post">
         {% csrf_token %}
-        <h3>Golf Courses</h3>
+        <h3 class="title">Golf Courses</h3>
         <div class="input-group mb-3">
             <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" required
                 title="Name of golf course required">
@@ -22,7 +22,7 @@
     </form>
     <div class="table table-container">
         <table class="table">
-            <thead>
+            <thead class="table-primary">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>

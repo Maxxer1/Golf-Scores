@@ -6,16 +6,24 @@
             <h3>Account Management</h3>
             <div class="form-group">
                 <label for="current-password">Current password</label>
-                <input type="current-password" class="form-control" name="current-password" id="current-password"
+                <input type="password" class="form-control" name="current-password" id="current-password"
                     placeholder="Enter current password">
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                <label for="new-password">New password</label>
+                <input type="password" class="form-control" name="new-password" id="new-password" placeholder="Enter new password">
+            </div>
+            <div class="form-group">
+                <label for="confirm-new-password">Confirm new password</label>
+                <input type="password" class="form-control" name="confirm-new-password" id="confirm-new-password" placeholder="Confirm new pasword">
             </div>
             {% if error_message %}
             <div class="alert alert-danger" role="alert">
                 {{ error_message }}
+            </div>
+            {% elif success_message %}
+            <div class="alert alert-info" role="info">
+                {{ success_message }}
             </div>
             {% endif %}
             <button type="submit" class="btn btn-lg btn-primary btn-block">Change password</button>

@@ -1,7 +1,65 @@
 {% extends 'base.html' %} {% block content %}
-    {% if user.is_authenticated %}
-        <h1>Autentyk</h1>
-    {% else %}
-        <h1>Nie</h1>
-    {% endif %}
+{% if user.is_authenticated %}
+<div class="container">
+    <h1 class="title">Golf Scores</h1>
+</div>
+<div class="container centered-container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Add golf courses</h5>
+                    {% load static %}
+                    <img src="{% static 'golf_course.svg' %}" class="card-image">
+                    <p class="card-text">Here you can add golf courses with other Users</p>
+                    <a href="{% url 'web:golf_courses' %}" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Add scores</h5>
+                    {% load static %}
+                    <img src="{% static 'golf_club.svg' %}" class="card-image">
+                    <p class="card-text">Here you can save your own golf scores</p>
+                    <a href="{% url 'web:scores' %}" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <h1 class="title">Golf Scores</h1>
+</div>
+<div class="container centered-container">
+    <div class="card-group">
+        <div class="card">
+            {% load static %}
+            <img class="card-img-top" src="{% static 'Rory.jpeg' %}" alt="Rory McIlroy">
+            <div class="card-body">
+                <h5 class="card-title">Save your scores</h5>
+                <p class="card-text">This website allows you to save your golf scores on courses you've played.</p>
+            </div>
+        </div>
+        <div class="card">
+            {% load static %}
+            <img class="card-img-top" src="{% static 'Augusta.jpeg' %}" alt="Augusta course">
+            <div class="card-body">
+                <h5 class="card-title">Golf Courses</h5>
+                <p class="card-text">Add golf courses you've played. See golf courses posted by other users.</p>
+            </div>
+        </div>
+        <div class="card">
+            {% load static %}
+            <img class="card-img-top" src="{% static 'Rory_players.jpeg' %}" alt="Rory with Players trophy">
+            <div class="card-body">
+                <h5 class="card-title">Manage your scores</h5>
+                <p class="card-text">This site allows you to create and delete your golf scores.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

@@ -5,6 +5,8 @@ from django.contrib.auth import login, logout
 from commons.success_messages import SuccessMessage
 from commons.error_messages import ErrorMessage
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+
 
 def signup(request):
     if request.method == 'POST':
@@ -38,13 +40,25 @@ def signin(request):
     return render(request, 'signin.html')
 
 
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('/')
 
 
+@login_required
 def account_management(request):
     return render(request, 'account_management.html')
 
+
+@login_required
 def change_password(request):
-    return
+    if request.user.check_password(request.POST['current-password']) and request.POST['new-password'] == request.POST['confirm-new-password']:
+        request.user.set_password(request.POST['new-password'])
+        request.user.save()
+        login(request, request.user)
+        return render(request, 'account_management.html', {'success_message': SuccessMessage.PASSWORD_CHANGED.value})
+    elif request.POST['new-password'] != request.POST['confirm-new-password']:
+        return render(request, 'account_management.html', {'error_message': ErrorMessage.PASSWORDS_DONT_MATCH.value})
+    else:
+        return render(request, 'account_management.html', {'error_message': ErrorMessage.WRONG_CURRENT_PASSWORD.value})
