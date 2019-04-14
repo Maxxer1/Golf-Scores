@@ -9,5 +9,5 @@ RUN pip install -r requirements.txt
 # Expose port                                                              
 EXPOSE 8000
 # Change working directory
-WORKDIR /app/trip_booking_server
+WORKDIR /app/golf_scores
 
