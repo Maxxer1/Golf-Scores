@@ -1,36 +1,37 @@
 # Golf Scores
 
-## Uruchomienie
 
-### Wersja produkcyjna
+![Main screen](https://i.ibb.co/Lnr5HZ4/Screenshot-from-2019-07-15-08-30-52.png)
 
-`docker-compose up -d mysql`  
-`docker-compose up -d server`
+![Golf courses](https://i.ibb.co/x7MB06R/Screenshot-from-2019-07-15-08-31-15.png)
+
+![Golf scores](https://i.ibb.co/R3DtZ1F/Screenshot-from-2019-07-15-08-31-24.png)
+
+## Launching
+
+### Production
+
+`docker-compose up -d`  
 
 ### Development
 
-1. Klonujemy repozytorium
-2. Tworzymy python virtual enviroment  
+1. Clone repo
+2. Create python virtual environment  
    `python -m venv venv`
-3. Aktywujemy venv  
+3. Activate venv  
    `source venv/bin/activate`
-4. Instalujemy zaleznosci  
+4. Install dependencies  
    `pip install -r requirements.txt`
 
-Uruchamiamy baze danych MySQL  
+Run MySQL 
 `docker-compose up -d mysql`
 
-Migracje bazy danych  
+DB migrations  
 `python manage.py migrate`
 
-Załadowanie testowych danych  
-`db_fixtures.json` - plik z testowymi danymi gotowymi do załadowania  
+Load test data  
+`db_fixtures.json` - database fixtures 
 `python manage.py loaddata db_fixtures.json`  
 
-Uruchomienie serwera  
+Launch server  
 `python manage.py runserver 0.0.0.0:8000`
-
-Panel administratora do bazy danych
-`http://localhost:8000/admin`
-Login: `admin`
-Hasło: `adminadmin`
